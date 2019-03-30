@@ -29,3 +29,11 @@ test "8000 de deuda"{
 	assert.equals(8000,gimenez.deuda())
 	assert.equals(0,gimenez.totalDinero())
 }
+test "deuda en 0"{
+	gimenez.gastar(4000)
+	gimenez.gastar(8000)
+	galvan.pagarA(gimenez)
+	gimenez.pagar()
+	assert.equals(0,gimenez.deuda())
+	//assert.equals(0,gimenez.totalDinero())
+}

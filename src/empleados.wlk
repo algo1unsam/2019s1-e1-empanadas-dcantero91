@@ -10,6 +10,9 @@ object gimenez {
 	method totalDinero(){
 		return dinero
 	}
+	method totalDeuda(){
+		return deuda
+	}
 	method dinero(_dinero){
 		dinero=_dinero
 	}
@@ -30,11 +33,17 @@ object gimenez {
 	method sueldo() { 
 		return sueldo
 	}
-	method pagar(){
-		var auxdeuda=0
-		auxdeuda=deuda
+	method pagarDeuda(){
+		if (deuda<dinero){
 		deuda=deuda-dinero
-		dinero=dinero-auxdeuda
+		deuda=deuda*-1
+		dinero=deuda
+		deuda=0
+		}
+		else {
+			deuda=deuda-dinero
+			dinero=0
+		}
 	}
 	method sueldo(nuevoValor) { sueldo = nuevoValor }
 }
@@ -53,15 +62,22 @@ object baigorria {
 	method venderEmpanada() {
 		cantidadEmpanadasVendidas += 1
 	}
+	method reiniciarConteoEmpanadas(){
+		cantidadEmpanadasVendidas = 0
+	}
  	method cobrarSueldo(){
+ 		var auxsueldo=0
+ 		ahorro=ahorro+self.sueldo()
  		self.totalCobrado(self.sueldo())
- 		return self.sueldo()
+ 		auxsueldo=self.sueldo()
+ 		self.reiniciarConteoEmpanadas()
+ 		return auxsueldo
  	}
-	method sueldo() {	
+	method sueldo() {
 	 return cantidadEmpanadasVendidas * montoPorEmpanada
 	 }
 	 method totalCobrado(sueldo){
-	 	ahorro=ahorro+sueldo
+	 	return ahorro
 	 }
 }
 
@@ -69,5 +85,8 @@ object baigorria {
 object galvan {
 	var dinero = 300000
 	method dinero() { return dinero }
-	method pagarA( empleado ) { dinero -= empleado.cobrarSueldo() }
+	method pagarA( empleado ) { 
+  	dinero -= empleado.sueldo()
+    empleado.cobrarSueldo()
+  }
 }

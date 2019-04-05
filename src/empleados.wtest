@@ -18,6 +18,12 @@ test "Pagar a Baigorria"{
 	galvan.pagarA(gimenez)
 	assert.equals(283470,galvan.dinero())
 	assert.equals(1530,baigorria.ahorro())
+	baigorria.venderEmpanada()
+	baigorria.venderEmpanada()
+	assert.equals(30,baigorria.sueldo())
+	galvan.pagarA(baigorria)
+	assert.equals(283440,galvan.dinero())
+	
 }
 test "4000 de deuda"{
 	gimenez.gastar(4000)
@@ -29,11 +35,19 @@ test "8000 de deuda"{
 	assert.equals(8000,gimenez.deuda())
 	assert.equals(0,gimenez.totalDinero())
 }
-test "deuda en 0"{
+test "Finanzas de Gimenez"{
 	gimenez.gastar(4000)
 	gimenez.gastar(8000)
 	galvan.pagarA(gimenez)
-	gimenez.pagar()
-	assert.equals(0,gimenez.deuda())
-	//assert.equals(0,gimenez.totalDinero())
+	gimenez.pagarDeuda()
+	assert.equals(0,gimenez.totalDeuda())
+	assert.equals(3000,gimenez.totalDinero())
+	gimenez.gastar(25000)
+	gimenez.pagarDeuda()
+	assert.equals(22000,gimenez.totalDeuda())
+	assert.equals(0,gimenez.totalDinero())
+	galvan.pagarA(gimenez)
+	gimenez.pagarDeuda()
+	assert.equals(7000,gimenez.totalDeuda())
+	assert.equals(0,gimenez.totalDinero())
 }
